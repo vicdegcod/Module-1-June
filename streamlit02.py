@@ -47,80 +47,25 @@ class Database:
             FOREIGN KEY(therapist_id) REFERENCES therapists(therapist_id)
         )
         """)
-        
-        self.conn.commit()
 
+        self.conn.commit()
+    def client_tile(name, addiction, progress, sessions):
+        ui.card(
+        title=f"👤 {name}",
+        content=f"""
+        Addiction: {addiction}  
+        Progress: {progress}%  
+        Sessions: {sessions}
+        """
+    )
+        
+        
 db = Database()
 
 # ==============================
 # STREAMLIT PAGE
 # ==============================
 
-st.markdown("""
-<style>
-.main-title{
-    font-size:42px;
-    font-weight:700;
-    color:#2563EB;
-}
-
-.block-container{
-    padding-top:2rem;
-    padding-bottom:2rem;
-}
-
-div[data-testid="stMetric"]{
-    background:white;
-    padding:20px;
-    border-radius:15px;
-    border:1px solid #E5E7EB;
-    box-shadow:0 8px 25px rgba(0,0,0,.08);
-}
-
-.stButton>button{
-    width:100%;
-    border-radius:12px;
-    height:48px;
-    font-weight:600;
-}
-
-.stDataFrame{
-    border-radius:15px;
-}
-/* App container spacing */
-.block-container {
-    padding: 2rem 2rem 3rem 2rem;
-    max-width: 1200px;
-}
-
-/* Typography */
-h1, h2, h3 {
-    font-weight: 600;
-    letter-spacing: -0.3px;
-}
-
-/* Buttons (shadcn-like) */
-.stButton button {
-    border-radius: 10px;
-    border: 1px solid #2e2e2e;
-    background-color: #0f172a;
-    color: white;
-    padding: 0.55rem 1rem;
-    transition: all 0.2s ease-in-out;
-}
-
-.stButton button:hover {
-    border-color: #6366f1;
-    transform: translateY(-1px);
-}
-
-/* Sidebar styling */
-[data-testid="stSidebar"] {
-    background-color: #0b0f19;
-}
-
-</style>
-""", unsafe_allow_html=True)
 st.set_page_config(page_title="Rehabilitation Management System", layout="wide")
 
 st.title("🏥 Rehabilitation Management System")
