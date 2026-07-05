@@ -68,7 +68,7 @@ db = Database()
 
 st.set_page_config(page_title="Rehabilitation Management System", layout="wide")
 
-st.title("🏥 Rehabilitation Management System")
+st.title("🏥 SLIP(Rehabilitation Management System)")
 
 menu = st.sidebar.selectbox(
     "Select Module",
