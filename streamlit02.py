@@ -47,45 +47,6 @@ class Database:
             FOREIGN KEY(therapist_id) REFERENCES therapists(therapist_id)
         )
         """)
-        st.title("🧠 Rehab System Dashboard")
-st.caption("shadcn-style Streamlit hybrid UI")
-
-st.divider()
-
-# KPI row
-col1, col2, col3, col4 = st.columns(4)
-
-with col1:
-    kpi("👤 Clients", "120", "+5")
-
-with col2:
-    kpi("📅 Sessions", "340", "+22")
-
-with col3:
-    kpi("📈 Progress", "78%", "+3%")
-
-with col4:
-    kpi("⚠️ Alerts", "3", "-1")
-
-st.divider()
-
-# Main content
-colA, colB = st.columns([2, 1])
-
-with colA:
-    st.subheader("👤 Clients")
-    for i in range(3):
-        client_tile(
-            "John Doe",
-            "Alcohol",
-            78,
-            "12/16"
-        )
-
-with colB:
-    st.subheader("⚠️ Alerts")
-    st.warning("2 clients missed sessions")
-    st.info("System updated successfully")
 
 self.conn.commit()
 
