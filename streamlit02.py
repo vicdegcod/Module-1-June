@@ -354,7 +354,67 @@ with col3:
     db = Database() 
     st.set_page_config( page_title="Clients", page_icon="👥", layout="wide" ) 
     st.title("👥 Client Management") 
-    tab = ui.tabs( options=[ "Add Client", "View Clients", "Update Client", "Delete Client" ], default_value="Add Client", key="client_tabs" ) if tab == "Add Client": st.subheader("➕ Register New Client") with st.container(border=True): col1, col2 = st.columns(2) with col1: name = st.text_input("Client Name") age = st.number_input( "Age", min_value=1, max_value=120, value=18 ) gender = st.selectbox( "Gender", [ "Male", "Female", "Other" ] ) with col2: addiction = st.text_input("Addiction Type") admission_date = st.date_input( "Admission Date" ) total_sessions = st.number_input( "Total Therapy Sessions", min_value=1, value=10 ) st.divider() if ui.button( text="Add Client", key="add_client_button" ): if name.strip() == "": st.error("Client name is required.") elif addiction.strip() == "": st.error("Please enter the addiction type.") else: db.add_client( name=name, age=age, gender=gender, addiction=addiction, admission_date=str(admission_date), total_sessions=total_sessions ) st.success("✅ Client registered successfully!") elif tab == "View Clients": st.subheader("📋 Registered Clients") clients = db.get_clients() if clients.empty: st.info("No clients have been registered.") else: col1, col2 = st.columns([3, 1]) with col1: search = st.text_input( "🔍 Search by client name" ) with col2: gender_filter = st.selectbox( "Gender", [ "All", "Male", "Female", "Other" ] ) filtered = clients.copy() if search: filtered = filtered[ filtered["name"] .str.contains(search, case=False) ] if gender_filter != "All": filtered = filtered[ filtered["gender"] == gender_filter ] st.dataframe( filtered, use_container_width=True, hide_index=True ) st.caption( f"Showing {len(filtered)} of {len(clients)} clients." ) elif tab == "Update Client": st.info( "Update Client functionality will be added in Part 3B." ) elif tab == "Delete Client": st.info( "Delete Client functionality will be added in Part 3B." ) elif tab == "Update Client": st.subheader("✏️ Update Client Information") clients = db.get_clients() if clients.empty: st.info("No clients available.") else: client_ids = clients["client_id"].tolist() selected_id = st.selectbox( "Select Client ID", client_ids ) client = clients[ clients["client_id"] == selected_id ].iloc[0] with st.container(border=True): col1, col2 = st.columns(2) with col1: name = st.text_input( "Client Name", value=client["name"] ) age = st.number_input( "Age", min_value=1, max_value=120, value=int(client["age"]) ) gender = st.selectbox( "Gender", ["Male", "Female", "Other"], index=[ "Male", "Female", "Other" ].index(client["gender"]) ) with col2: addiction = st.text_input( "Addiction", value=client["addiction"] ) admission = st.text_input( "Admission Date", value=client["admission_date"] ) sessions = st.number_input( "Total Sessions", min_value=1, value=int(client["total_sessions"]) ) completed = st.number_input( "Completed Sessions", min_value=0, value=int(client["completed_sessions"]) ) if ui.button( text="Update Client", key="update_client" ): db.cursor.execute(""" UPDATE clients SET name=?, age=?, gender=?, addiction=?, admission_date=?, total_sessions=?, completed_sessions=? WHERE client_id=? """, ( name, age, gender, addiction, admission, sessions, completed, selected_id )) db.conn.commit() st.success("✅ Client updated successfully.") st.rerun() elif tab == "Delete Client": st.subheader("🗑 Delete Client") clients = db.get_clients() if clients.empty: st.info("No clients available.") else: options = { f"{row.client_id} - {row.name}": row.client_id for _, row in clients.iterrows() } selected = st.selectbox( "Select Client", list(options.keys()) ) client_id = options[selected] st.warning( "Deleting a client also removes all appointments associated with that client." ) confirm = st.checkbox( "I understand and want to continue." ) if confirm: if ui.button( text="Delete Client", key="delete_client" ): db.delete_client(client_id) st.success("✅ Client deleted successfully.") st.rerun() sort_by = st.selectbox( "Sort By", [ "Client ID", "Name", "Age", "Completed Sessions", "Total Sessions" ] ) sort_columns = { "Client ID": "client_id", "Name": "name", "Age": "age", "Completed Sessions": "completed_sessions", "Total Sessions": "total_sessions" } filtered = filtered.sort_values( by=sort_columns[sort_by] ) st.divider() metric1, metric2, metric3, metric4 = st.columns(4) metric1.metric( "Total Clients", len(filtered) ) metric2.metric( "Average Age", round(filtered["age"].mean(), 1) if len(filtered) else 0 ) metric3.metric( "Average Sessions", round(filtered["total_sessions"].mean(), 1) if len(filtered) else 0 ) metric4.metric( "Completed Sessions", int(filtered["completed_sessions"].sum()) if len(filtered) else 0 ) st.divider() st.dataframe( filtered, use_container_width=True, hide_index=True ) csv = filtered.to_csv(index=False).encode("utf-8") st.download_button( label="📥 Download Client List (CSV)", data=csv, file_name="clients.csv", mime="text/csv" ) st.caption( f"Showing {len(filtered)} client(s)." ) 
+    tab = ui.tabs(
+    options=[
+        "Add Client",
+        "View Clients",
+        "Update Client",
+        "Delete Client"
+    ],
+    default_value="Add Client",
+    key="client_tabs"
+)
+
+if tab == "Add Client":
+    st.subheader("➕ Register New Client")
+
+    with st.container(border=True):
+
+        col1, col2 = st.columns(2)
+
+        with col1:
+            name = st.text_input("Client Name")
+            age = st.number_input(
+                "Age",
+                min_value=1,
+                max_value=120,
+                value=18
+            )
+            gender = st.selectbox(
+                "Gender",
+                ["Male", "Female", "Other"]
+            )
+
+        with col2:
+            addiction = st.text_input("Addiction Type")
+            admission_date = st.date_input("Admission Date")
+            total_sessions = st.number_input(
+                "Total Therapy Sessions",
+                min_value=1,
+                value=10
+            )
+
+        st.divider()
+
+        if ui.button(
+            text="Add Client",
+            key="add_client_button"
+        ):
+            if name.strip() == "":
+                st.error("Client name is required.")
+            elif addiction.strip() == "":
+                st.error("Please enter the addiction type.")
+            else:
+                db.add_client(
+                    name=name,
+                    age=age,
+                    gender=gender,
+                    addiction=addiction,
+                    admission_date=str(admission_date),
+                    total_sessions=total_sessions
+                )
+
+                st.success("Client added successfully!")
     st.divider() if len(filtered): st.subheader("Client Summary") summary = filtered.copy() summary["Progress (%)"] = ( summary["completed_sessions"] / summary["total_sessions"] * 100 ).round(1) st.dataframe( summary[ [ "client_id", "name", "addiction", "completed_sessions", "total_sessions", "Progress (%)" ] ], use_container_width=True, hide_index=True ) else: st.info("No matching clients found.")
 
 import streamlit as st 
