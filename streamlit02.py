@@ -55,9 +55,38 @@ db = Database()
 # ==============================
 # STREAMLIT PAGE
 # ==============================
+
 st.markdown("""
 <style>
+.main-title{
+    font-size:42px;
+    font-weight:700;
+    color:#2563EB;
+}
 
+.block-container{
+    padding-top:2rem;
+    padding-bottom:2rem;
+}
+
+div[data-testid="stMetric"]{
+    background:white;
+    padding:20px;
+    border-radius:15px;
+    border:1px solid #E5E7EB;
+    box-shadow:0 8px 25px rgba(0,0,0,.08);
+}
+
+.stButton>button{
+    width:100%;
+    border-radius:12px;
+    height:48px;
+    font-weight:600;
+}
+
+.stDataFrame{
+    border-radius:15px;
+}
 /* App container spacing */
 .block-container {
     padding: 2rem 2rem 3rem 2rem;
