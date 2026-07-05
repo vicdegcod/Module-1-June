@@ -312,7 +312,20 @@ class Database:
     appointments = db.total_appointments() 
     col1, col2, col3 = st.columns(3) 
     with col1: ui.metric_card( title="Clients", content=str(clients), description="Registered Clients", key="clients_card" ) 
-    with col2: ui.metric_card( title="Therapists", content=str(therapists), description="Available Therapists", key="therapists_card" ) with col3: ui.metric_card( title="Appointments", content=str(appointments), description="Scheduled Visits", key="appointments_card" ) 
+    with col2:ui.metric_card(
+        title="Therapists",
+        content=str(therapists),
+        description="Available Therapists",
+        key="therapists_card"
+    )
+
+with col3:
+    ui.metric_card(
+        title="Appointments",
+        content=str(appointments),
+        description="Scheduled Visits",
+        key="appointments_card"
+    )
     st.divider()
     left, right = st.columns([2, 1]) 
     with left: st.subheader("Welcome") 
