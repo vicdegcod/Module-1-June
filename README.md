@@ -8,9 +8,13 @@ solves the problem of scattered patient data, missed therapy appointments, and d
 Traditional rehabilitation clinics rely on paper records. This causes several issues, such as time waste when manually scheduling appointments and filing patient notes; therapists struggle to track recovery metrics over time across multiple sessions; and Paper records lack data protection for sensitive medical histories.
 
 ## Objective
-1.	Provide a dashboard where doctors can visually track a patient’s healing metrics.
-2.	Track patients’ data by storing health records and therapy logs securely.
-3.	Send automated reminders to patients for their upcoming therapy sessions
+1. To maintain accurate client records by securely storing personal information, medical history, addiction type, treatment plans, and rehabilitation progress.
+2. To manage therapy sessions by scheduling, updating, and tracking individual and group therapy appointments.
+3. To monitor client progress through attendance records, completed sessions, recovery milestones, and therapist assessments.
+4. To improve operational efficiency by reducing manual paperwork, minimizing data duplication, and automating routine administrative tasks.
+5. To support informed decision-making by generating reports and statistics on client outcomes, treatment effectiveness, and rehabilitation performance.
+6. To facilitate resource management by organizing therapist assignments, therapy programs, and rehabilitation services efficiently.
+7. To provide real-time access to information so authorized users can retrieve client data, schedules, and reports whenever needed.
 ## Success criteria
 1.	Users can add, update, delete, and view client records stored in an SQLite database.
 2.	Users can add, edit, delete, and view therapist information.
