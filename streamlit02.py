@@ -337,7 +337,16 @@ with col3:
     overview1, overview2 = st.columns(2) 
     with overview1: st.success(f"👥 Total Clients: {clients}") 
     st.success(f"🩺 Total Therapists: {therapists}") 
-    with overview2: st.success(f"📅 Total Appointments: {appointments}") if clients > 0:average = appointments / clients else: average = 0 st.success(f"📈 Average Visits per Client: {average:.2f}") st.divider() 
+    with overview2:st.success(f"📅 Total Appointments: {appointments}")
+
+    if clients > 0:
+        average = appointments / clients
+    else:
+        average = 0
+
+    st.success(f"📈 Average Visits per Client: {average:.2f}")
+
+    st.divider()
     st.caption("Rehabilitation Management System | Streamlit + streamlit-shadcn-ui")
 
     import streamlit as st 
