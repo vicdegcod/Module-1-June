@@ -47,8 +47,8 @@ class Database:
             FOREIGN KEY(therapist_id) REFERENCES therapists(therapist_id)
         )
         """)
-
-self.conn.commit()
+        
+        self.conn.commit()
 
 db = Database()
 
