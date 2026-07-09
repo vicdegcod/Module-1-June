@@ -31,7 +31,7 @@ class Database:
         self.cursor.execute("""
         CREATE TABLE IF NOT EXISTS therapists(
             therapist_id INTEGER PRIMARY KEY AUTOINCREMENT,
-            full_name TEXT NOT NULL,
+            name TEXT NOT NULL,
             specialization TEXT,
             phone TEXT,
             email TEXT
@@ -205,7 +205,7 @@ class Database:
         self.cursor.execute("""
         SELECT *
         FROM therapists
-        ORDER BY full_name
+        ORDER BY name
         """)
 
         return self.cursor.fetchall()
@@ -1245,7 +1245,7 @@ with tab2:
 
     st.subheader("Upcoming Appointments")
 
-    appointments = db.get_appointments()
+    appointments = db.total_appointments()
 
     if appointments:
 
@@ -1308,62 +1308,6 @@ with tab2:
     else:
         st.info("No appointments available.")
 
-# ------------------------------------------------
-# APPOINTMENT HISTORY
-# ------------------------------------------------
-with tab3:
-
-    st.subheader("Appointment History")
-
-    history = db.appointment_history()
-
-    if history:
-
-        history_df = pd.DataFrame(
-            history,
-            columns=[
-                "Appointment ID",
-                "Patient",
-                "Therapist",
-                "Date",
-                "Time",
-                "Status"
-            ]
-        )
-
-        st.dataframe(
-            history_df,
-            use_container_width=True,
-            hide_index=True
-        )
-
-    else:
-
-        st.info(
-            "No appointment history available."
-        )
-
-        # -----------------------------
-# GET ALL THERAPY SESSIONS
-# -----------------------------
-def get_sessions(self):
-
-    self.cursor.execute("""
-    SELECT
-        s.session_id,
-        p.full_name,
-        t.full_name,
-        s.session_date,
-        s.notes
-    FROM therapy_sessions s
-    JOIN patients p
-        ON s.patient_id = p.patient_id
-    JOIN therapists t
-        ON s.therapist_id = t.therapist_id
-    ORDER BY s.session_date DESC
-    """)
-
-    return self.cursor.fetchall()
 
 
 # -----------------------------
@@ -1493,7 +1437,7 @@ with tab2:
 
     else:
 
-        sessions = db.get_sessions()
+        sessions = db.total_sessions()
 
     if sessions:
 
