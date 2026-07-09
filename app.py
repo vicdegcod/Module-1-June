@@ -860,7 +860,7 @@ def update_therapist(
 
     import streamlit as st
 import pandas as pd
-from database import Database
+#from database import Database
 from datetime import date
 
 db = Database()
