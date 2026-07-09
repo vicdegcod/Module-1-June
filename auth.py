@@ -1,5 +1,6 @@
 import streamlit as st
 from database import cursor, conn
+from streamlit_option_menu import option_menu
 
 # ==========================================
 # LOGIN
@@ -27,6 +28,11 @@ def login(username, password):
         "username": user[0],
         "role": user[2]
     }
+user = st.session_state.get("user")
+
+if user is None:
+    st.error("Please login first.")
+    st.stop()
 
 
 # ==========================================
