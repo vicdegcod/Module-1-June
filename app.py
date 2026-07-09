@@ -389,7 +389,7 @@ class Database:
 
 import streamlit as st
 import pandas as pd
-from database import Database
+#from database import Database
 
 # -----------------------------------
 # PAGE CONFIGURATION
