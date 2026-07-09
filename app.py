@@ -592,7 +592,7 @@ def get_patient_by_id(self, patient_id):
 
 import streamlit as st
 import pandas as pd
-from database import Database
+#from database import Database
 
 db = Database()
 
@@ -1153,7 +1153,7 @@ def appointment_history(self):
 
 import streamlit as st
 import pandas as pd
-from database import Database
+#from database import Database
 
 db = Database()
 
@@ -1391,7 +1391,7 @@ def search_sessions(self, keyword):
 
 import streamlit as st
 import pandas as pd
-from database import Database
+#from database import Database
 from datetime import date
 
 db = Database()
@@ -1557,7 +1557,7 @@ with tab3:
         import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
-from database import Database
+#from database import Database
 
 db = Database()
 
